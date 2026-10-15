@@ -1,33 +1,23 @@
 import { useState } from "react"
+import TodoList from "./TodoList"
+import NewTodo from "./NewTodo"
 //Test
 const App =() =>{
-  const [todo,setTodo] =useState([])
-  const [input,setInput] =useState('')
-
-  const handleSubmit =(e)=>{
-    e.preventDefault()
-    const newTodo ={
-      id: Date.now(),
-      text: input
+  const [todos,setTodo] =useState([])
+  const setTodoHandler = (newTodo) => {
+    setTodo([...todos, newTodo])
+  }
+  const removeTodoHandler =(id) =>{
+    const Check=(todo) =>{
+      return todo.id !== id
     }
+    setTodo(todos.filter(Check))
 
-  setTodo([...todo,newTodo])
-}
+  }
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input 
-        type = 'text' 
-        value={input} 
-        onChange={(e) => setInput(e.target.value)}></input>
-        <button type="submit">Submit</button>        
-      </form>
-
-      <ul>
-        {todo.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
-        ))}
-      </ul>
+      <NewTodo setTodoHandler={setTodoHandler} />
+      <TodoList removeTodoHandler={removeTodoHandler} data={todos}/>  
     </div>
   )
 
