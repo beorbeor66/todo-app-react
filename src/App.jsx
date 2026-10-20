@@ -1,7 +1,9 @@
 import { useState } from "react"
 import TodoList from "./TodoList"
 import NewTodo from "./NewTodo"
-//Test
+import { useEffect } from "react"
+
+
 const App =() =>{
   const [todos,setTodo] =useState([])
   const setTodoHandler = (newTodo) => {
@@ -21,8 +23,25 @@ const App =() =>{
         todo.id === id ? {
           ...todo,text: newText } : todo
     )
-  )
+    )
   }
+
+  const requestTodos = async () => {
+    const url = "http://localhost:8000/api/todos";
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const result = await response.json();
+    console.log(result);
+    setTodo(result)
+  }
+
+  useEffect(() => {
+    requestTodos()
+
+    return () => {};
+  }, [])
 
   return (
     <div>
