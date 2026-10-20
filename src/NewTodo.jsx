@@ -12,6 +12,7 @@ export default function NewTodo({setTodoHandler}){
             text: input
         }
         setTodoHandler(newTodo)
+        setInput('')
     }
 
     return (

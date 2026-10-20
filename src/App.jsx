@@ -7,17 +7,27 @@ const App =() =>{
   const setTodoHandler = (newTodo) => {
     setTodo([...todos, newTodo])
   }
-  const removeTodoHandler =(id) =>{
+
+  const removeTodoHandler =(hi) =>{
     const Check=(todo) =>{
-      return todo.id !== id
+      return todo.id !== hi
     }
     setTodo(todos.filter(Check))
-
   }
+
+  const editTodoHandler =(id,newText) => {
+    setTodo(
+      todos.map((todo) =>
+        todo.id === id ? {
+          ...todo,text: newText } : todo
+    )
+  )
+  }
+
   return (
     <div>
       <NewTodo setTodoHandler={setTodoHandler} />
-      <TodoList removeTodoHandler={removeTodoHandler} data={todos}/>  
+      <TodoList removeTodoHandler={removeTodoHandler} data={todos} editTodoHandler={editTodoHandler}/>  
     </div>
   )
 
